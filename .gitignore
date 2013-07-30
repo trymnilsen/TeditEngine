@@ -12,12 +12,13 @@ gen/
 *.ipr
 *.iws
 .idea/
-local.properties
 *.tmp
 *.bak
 *.swp
 *~.nib
-local.properties
+find-android.bat
+find-android.sh
+*.properties
 .classpath
 .settings/
 .loadpath
