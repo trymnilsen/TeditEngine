@@ -7,6 +7,12 @@
 .metadata
 bin/
 tmp/
+gen/
+*.iml
+*.ipr
+*.iws
+.idea/
+local.properties
 *.tmp
 *.bak
 *.swp
