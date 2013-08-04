@@ -8,6 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.InputDevice;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import com.tedit.engine.graphics.EngineRenderer;
 import com.tedit.engine.graphics.RenderView;
@@ -36,6 +39,27 @@ public class GameRunner extends Activity implements Game
         setContentView(renderView);
         
     }
+    ///Input events
+    public boolean onGenericMotionEvent(final MotionEvent event) {
+        //Get the player #
+        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());    
+
+        //Joystick
+        if((event.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
+            float LS_X = event.getAxisValue(OuyaController.AXIS_LS_X);            
+            //do other things with joystick
+            Log.i("Joystick",""+LS_X);
+        }
+
+        //Touchpad
+        if((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
+            //Print the pixel coordinates of the cursor
+            Log.i("Touchpad", "Cursor X: " + event.getX() + "Cursor Y: " + event.getY());
+        }
+
+        return true;
+    }
+    //~input events
     @Override
     protected void onDestroy()
     {

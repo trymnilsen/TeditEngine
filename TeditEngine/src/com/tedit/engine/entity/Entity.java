@@ -36,11 +36,26 @@ public class Entity
             //if it is exclusive we replace it
             if(act.isExclusive() && runningAction(act.getId()))
             {
-                //remember to remove old one todo
-                act.start();
+              //remember to remove old one 
+                Action toRemove=null;
+                for(Action a: currentActions)
+                {
+                    if(a.getId()==act.getId())
+                    {
+                        toRemove = a;
+                        break;
+                    }
+                }
+                //If we for some reason get null just add it
+                if(toRemove!=null)
+                {
+                    currentActions.remove(toRemove);
+                }
+                currentActions.add(act);
             }
             else
             {
+                //Action was not excluse and already running. We can add it
                 currentActions.add(act);
             }
             //Instantly start the action, giving chance to set values later actions might need
