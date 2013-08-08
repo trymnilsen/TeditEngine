@@ -40,43 +40,30 @@ public class GameRunner extends Activity implements Game
         
     }
 
+    /**
+     * Input Handling
+     * As we want to have to available no matter the view/state of our app we forward the presses to the ouyaController Class
+     */
+    //Redirects the keydown event
     @Override
     public boolean onKeyDown(final int keyCode, KeyEvent event){
-        //Get the player #
 
-        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());       
-        boolean handled = false;
-
-        //Handle the input
-        switch(keyCode){
-            case OuyaController.BUTTON_O:
-                //You now have the key pressed and the player # that pressed it
-                //doSomethingWithKey();
-                handled = true;
-                break;
-        }
+        boolean handled = OuyaController.onKeyDown(keyCode, event);
         return handled || super.onKeyDown(keyCode, event);
     }
-    ///Input events
+    
+    //redirects the key up event
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event)
+    {
+        boolean handled = OuyaController.onKeyUp(keyCode, event);
+        return handled || super.onKeyUp(keyCode, event);
+    }
+    //Generic like analog or touchpad
     @Override
     public boolean onGenericMotionEvent(final MotionEvent event) {
-        //Get the player #
-        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());    
-
-        //Joystick
-        if((event.getSource() & InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
-            float LS_X = event.getAxisValue(OuyaController.AXIS_LS_X);            
-            //do other things with joystick
-            Log.i("Joystick",""+LS_X);
-        }
-
-        //Touchpad
-        if((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
-            //Print the pixel coordinates of the cursor
-            Log.i("Touchpad", "Cursor X: " + event.getX() + "Cursor Y: " + event.getY());
-        }
-
-        return true;
+        boolean handled = OuyaController.onGenericMotionEvent(event);
+        return handled || super.onGenericMotionEvent(event);
     }
     //~input events
     @Override
