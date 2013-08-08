@@ -39,7 +39,26 @@ public class GameRunner extends Activity implements Game
         setContentView(renderView);
         
     }
+
+    @Override
+    public boolean onKeyDown(final int keyCode, KeyEvent event){
+        //Get the player #
+
+        int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());       
+        boolean handled = false;
+
+        //Handle the input
+        switch(keyCode){
+            case OuyaController.BUTTON_O:
+                //You now have the key pressed and the player # that pressed it
+                //doSomethingWithKey();
+                handled = true;
+                break;
+        }
+        return handled || super.onKeyDown(keyCode, event);
+    }
     ///Input events
+    @Override
     public boolean onGenericMotionEvent(final MotionEvent event) {
         //Get the player #
         int player = OuyaController.getPlayerNumByDeviceId(event.getDeviceId());    
