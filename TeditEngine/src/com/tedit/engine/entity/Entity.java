@@ -3,6 +3,8 @@ package com.tedit.engine.entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.util.SparseArray;
+
 import com.tedit.engine.action.Action;
 import com.tedit.engine.events.EventActions;
 import com.tedit.engine.events.EventType;
@@ -16,7 +18,7 @@ public class Entity
     private boolean staticEntity;
     private int depth;
     private Entity parent;
-    private HashMap<EventType, ArrayList<Action>> eventActions;
+    private SparseArray<ArrayList<Action>> eventActions;
     
     private ArrayList<Action> currentActions;
     
@@ -25,7 +27,7 @@ public class Entity
         currentActions = new ArrayList<Action>();
     }
     
-    public void dispatchEvent(EventType id)
+    public void dispatchEvent(int id)
     {
         //If we dont have a blocking action, trigger and add new actions
         
