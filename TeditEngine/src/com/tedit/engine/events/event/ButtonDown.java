@@ -7,21 +7,22 @@ import com.tedit.engine.events.ButtonId;
 import com.tedit.engine.events.EventIdUtil;
 import com.tedit.engine.events.EventType;
 
-public class ButtonPressed implements Event
+public class ButtonDown implements Event
 {
     
     private int playerNum;
     private int buttonId;
     private OuyaController controller;
     
-    public ButtonPressed(int playerNum, int buttonId)
+    public ButtonDown(int playerNum, int buttonId)
     {
         this.playerNum=playerNum;
         this.buttonId = buttonId;
         this.controller=OuyaController.getControllerByPlayer(playerNum);
     }
+    
     @Override
-    public boolean Test()
+    public boolean test()
     {
         if(controller.getButton(buttonId))
         {
@@ -33,9 +34,7 @@ public class ButtonPressed implements Event
     @Override
     public int getId()
     {
-        
-        // TODO implement usage of eventIdUtilClass
-        return EventIdUtil.generateId(EventType.eventButtonPressed.value, buttonId);
+        return EventIdUtil.generateId(EventType.eventButtonDown.value, buttonId);
     }
 
 }

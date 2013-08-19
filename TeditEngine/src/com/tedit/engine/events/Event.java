@@ -2,6 +2,6 @@ package com.tedit.engine.events;
 
 public interface Event
 {
-    boolean Test();
+    boolean test();
     int getId();
 }

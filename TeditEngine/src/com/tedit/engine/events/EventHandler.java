@@ -3,11 +3,13 @@ package com.tedit.engine.events;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import tv.ouya.console.api.OuyaController;
+
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.tedit.engine.entity.Entity;
-import com.tedit.engine.events.event.ButtonPressed;
+import com.tedit.engine.events.event.ButtonDown;
 
 public class EventHandler
 {
@@ -18,8 +20,9 @@ public class EventHandler
     
     public EventHandler()
     {
-        events.put(Integer.valueOf(2),new ButtonPressed(2, 4));
+       
     }
+    
     public void subscribe(int eventId, Entity entity)
     {
         //If our subscription list already contains this event add it to
@@ -31,6 +34,7 @@ public class EventHandler
 
         subscriptions.get(eventId).add(entity);
     }
+    
     public void update()
     {
         //have to iterate the old way with sparsearray
@@ -39,16 +43,18 @@ public class EventHandler
             key = events.keyAt(i);
             // get the object by the key.
             Event e = events.get(key);
-            if(e.Test())
+            if(e.test())
             {
                 triggerEvent(e.getId());
             }
         }
     }
+    
     public void draw()
     {
         triggerEvent(EventType.eventDraw.ordinal());
     }
+    
     private void triggerEvent(int eventId)
     {
         if(subscriptions.get(eventId)!=null)
@@ -63,4 +69,10 @@ public class EventHandler
             Log.e("EventHandler", "tried to trigger event not existing"+eventId);
         }
     }
+    
+    private void initializeEvents()
+    {
+        events.put(Integer.valueOf(2),new ButtonDown(2, OuyaController.BUTTON_O));
+    }
+    
 }

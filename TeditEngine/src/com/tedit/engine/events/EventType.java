@@ -4,7 +4,8 @@ public enum EventType
 {
     eventUpdate(11),
     eventDraw(12),
-    eventButtonPressed(13)
+    eventButtonPressed(13),
+    eventButtonDown(14)
     ;
     private EventType(int n)
     {
