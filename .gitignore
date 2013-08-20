@@ -17,7 +17,6 @@ gen/
 *~.nib
 find-android.bat
 find-android.sh
-*.properties
 .classpath
 .settings/
 .loadpath
