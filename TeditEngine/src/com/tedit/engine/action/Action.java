@@ -1,11 +1,21 @@
 package com.tedit.engine.action;
 
-public interface Action
+import com.tedit.engine.entity.Entity;
+
+public abstract class Action
 {
-    boolean isBlocking();
-    boolean isExclusive();
-    int getId();
-    void update(float deltaTime);
-    void start();
-    void draw();
+    protected Entity parent;
+    
+    public Action(Entity parent)
+    {
+        this.parent=parent;
+    }
+    
+    public abstract boolean isSingleStep();
+    public abstract boolean isBlocking();
+    public abstract boolean isExclusive();
+    public abstract int getId();
+    public abstract void update(float deltaTime);
+    public abstract void start();
+    public abstract void draw();
 }

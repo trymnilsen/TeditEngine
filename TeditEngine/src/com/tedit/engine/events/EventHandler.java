@@ -3,49 +3,76 @@ package com.tedit.engine.events;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import tv.ouya.console.api.OuyaController;
+
+import android.util.Log;
+import android.util.SparseArray;
+
 import com.tedit.engine.entity.Entity;
+import com.tedit.engine.events.event.ButtonDown;
 
 public class EventHandler
 {
-    private HashMap<EventType,Event> events = new HashMap<EventType,Event>();
-    private HashMap<EventType,ArrayList<Entity>> subscriptions= new HashMap<EventType,ArrayList<Entity>>();
+    private SparseArray<Event> events = new SparseArray<Event>();
+    private SparseArray<ArrayList<Entity>> subscriptions= new SparseArray<ArrayList<Entity>>();
     
     //private Dispatcher actionDispatcher;
     
     public EventHandler()
     {
-
+       
     }
-    public void subscribe(EventType eventId, Entity entity)
+    
+    public void subscribe(int eventId, Entity entity)
     {
         //If our subscription list already contains this event add it to
         //If not create it
-        if(!subscriptions.containsKey(eventId))
+        if(subscriptions.indexOfKey(eventId)>=0)
         {
             subscriptions.put(eventId, new ArrayList<Entity>());
         }
 
         subscriptions.get(eventId).add(entity);
     }
+    
     public void update()
     {
-        for(Event e:events.values())
-        {
-            if(e.Test())
+        //have to iterate the old way with sparsearray
+        int key = 0;
+        for(int i = 0; i < events.size(); i++) {
+            key = events.keyAt(i);
+            // get the object by the key.
+            Event e = events.get(key);
+            if(e.test())
             {
                 triggerEvent(e.getId());
             }
         }
     }
+    
     public void draw()
     {
-        triggerEvent(EventType.eventDraw);
+        triggerEvent(EventType.eventDraw.ordinal());
     }
-    private void triggerEvent(EventType eventId)
+    
+    private void triggerEvent(int eventId)
     {
-        for(Entity ent:subscriptions.get(eventId))
+        if(subscriptions.get(eventId)!=null)
         {
-            ent.dispatchEvent(eventId);
+            for(Entity ent:subscriptions.get(eventId))
+            {
+                ent.dispatchEvent(eventId);
+            }
+        }
+        else
+        {
+            Log.e("EventHandler", "tried to trigger event not existing"+eventId);
         }
     }
+    
+    private void initializeEvents()
+    {
+        events.put(Integer.valueOf(2),new ButtonDown(2, OuyaController.BUTTON_O));
+    }
+    
 }

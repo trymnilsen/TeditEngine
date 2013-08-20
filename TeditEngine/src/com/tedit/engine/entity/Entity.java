@@ -3,6 +3,8 @@ package com.tedit.engine.entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.util.SparseArray;
+
 import com.tedit.engine.action.Action;
 import com.tedit.engine.events.EventActions;
 import com.tedit.engine.events.EventType;
@@ -16,7 +18,7 @@ public class Entity
     private boolean staticEntity;
     private int depth;
     private Entity parent;
-    private HashMap<EventType, ArrayList<Action>> eventActions;
+    private SparseArray<ArrayList<Action>> eventActions;
     
     private ArrayList<Action> currentActions;
     
@@ -25,7 +27,7 @@ public class Entity
         currentActions = new ArrayList<Action>();
     }
     
-    public void dispatchEvent(EventType id)
+    public void dispatchEvent(int id)
     {
         //If we dont have a blocking action, trigger and add new actions
         
@@ -34,31 +36,37 @@ public class Entity
             //if the action is not exclusive (meaning we only can run one at a time, 
             //for example pathfinding, move to point) we add it to the list of actions to be run
             //if it is exclusive we replace it
-            if(act.isExclusive() && runningAction(act.getId()))
+            
+            //Lastly or most importantly if the action is a singlestep action, meaning it should only be executed once
+            //We dont bother about adding it to our current running actions list
+            if(!act.isSingleStep())
             {
-              //remember to remove old one 
-                Action toRemove=null;
-                for(Action a: currentActions)
+                if(act.isExclusive() && runningAction(act.getId()))
                 {
-                    if(a.getId()==act.getId())
+                  //remember to remove old one 
+                    Action toRemove=null;
+                    for(Action a: currentActions)
                     {
-                        toRemove = a;
-                        break;
+                        if(a.getId()==act.getId())
+                        {
+                            toRemove = a;
+                            break;
+                        }
                     }
+                    //If we for some reason get null just add it
+                    if(toRemove!=null)
+                    {
+                        currentActions.remove(toRemove);
+                    }
+                    currentActions.add(act);
                 }
-                //If we for some reason get null just add it
-                if(toRemove!=null)
+                else
                 {
-                    currentActions.remove(toRemove);
+                    //Action was not excluse and already running. We can add it
+                    currentActions.add(act);
                 }
-                currentActions.add(act);
             }
-            else
-            {
-                //Action was not excluse and already running. We can add it
-                currentActions.add(act);
-            }
-            //Instantly start the action, giving chance to set values later actions might need
+            //Instantly start the action, giving chance to set values later actions or the update method might need
             act.start();
         }
     }
