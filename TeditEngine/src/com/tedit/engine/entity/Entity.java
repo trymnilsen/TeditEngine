@@ -9,6 +9,7 @@ import com.tedit.engine.action.Action;
 import com.tedit.engine.events.EventActions;
 import com.tedit.engine.events.EventType;
 import com.tedit.engine.graphics.Sprite;
+import com.tedit.engine.graphics.Vector;
 
 public class Entity
 {
@@ -18,6 +19,11 @@ public class Entity
     private boolean staticEntity;
     private int depth;
     private Entity parent;
+    
+    private Vector localPosition;
+    private Vector localScale;
+    private float localRotation;
+    
     private SparseArray<ArrayList<Action>> eventActions;
     
     private ArrayList<Action> currentActions;
@@ -84,7 +90,16 @@ public class Entity
             act.draw();
         }
     }
-
+    //recursive function getting the absolute position based on the parent(s) positions
+    public Vector getAbsPosition(Vector thisVector)
+    {
+    	if(parent!=null)
+    	{
+    		thisVector.add(parent.getAbsPosition(thisVector));
+    	}
+    	return thisVector;
+    }
+    
     private boolean runningAction(int ActionId)
     {
         for(Action a: currentActions)
