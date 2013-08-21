@@ -20,13 +20,10 @@ public class Entity
     private int depth;
     private Entity parent;
     
-    private Vector localPosition;
-    private Vector localScale;
-    private float localRotation;
-    
     private SparseArray<ArrayList<Action>> eventActions;
-    
     private ArrayList<Action> currentActions;
+    
+    public EntityTransformation transformation;
     
     public Entity()
     {
@@ -59,7 +56,7 @@ public class Entity
                             break;
                         }
                     }
-                    //If we for some reason get null just add it
+                    //If we for some reason get null just add it, dont remove
                     if(toRemove!=null)
                     {
                         currentActions.remove(toRemove);
@@ -90,16 +87,12 @@ public class Entity
             act.draw();
         }
     }
-    //recursive function getting the absolute position based on the parent(s) positions
-    public Vector getAbsPosition(Vector thisVector)
+    //Gets and sets
+    public Entity getParent()
     {
-    	if(parent!=null)
-    	{
-    		thisVector.add(parent.getAbsPosition(thisVector));
-    	}
-    	return thisVector;
+        return parent;
     }
-    
+    //~gets and sets
     private boolean runningAction(int ActionId)
     {
         for(Action a: currentActions)

@@ -2,19 +2,22 @@ package com.tedit.engine.action.transform;
 
 import com.tedit.engine.action.Action;
 import com.tedit.engine.entity.Entity;
+import com.tedit.engine.graphics.Vector;
 
 public class Displace extends Action
 {
-    
-    public Displace(Entity parent)
+    private Vector displacement;
+    public Displace(Entity parent, Vector displacement)
     {
         super(parent);
+        this.displacement=displacement;
     }
 
     @Override
     public boolean isSingleStep()
     {
-        // TODO Auto-generated method stubl
+        //we directly displace the entity, we do not move slowly towards it
+        //this is done in one step; singlestep
         return true;
     }
 
@@ -49,7 +52,7 @@ public class Displace extends Action
     @Override
     public void start()
     {
-        
+        parent.transformation.translate(displacement);
         // TODO Auto-generated method stub
         
     }

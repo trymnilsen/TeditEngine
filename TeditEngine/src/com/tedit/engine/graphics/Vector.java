@@ -19,6 +19,10 @@ public class Vector {
 	{
 		return new Vector(0,0);
 	}
+	public static Vector One()
+	{
+	    return new Vector(1,1);
+	}
 	/**
 	 * Adds a vector to this vector
 	 * @param toAdd the Vector object to add
