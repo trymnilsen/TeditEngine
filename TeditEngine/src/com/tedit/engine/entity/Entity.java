@@ -3,11 +3,15 @@ package com.tedit.engine.entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.tedit.engine.action.Action;
+import com.tedit.engine.action.transform.Displace;
 import com.tedit.engine.events.EventActions;
 import com.tedit.engine.events.EventType;
+import com.tedit.engine.graphics.EngineRenderer;
+import com.tedit.engine.graphics.Renderer;
 import com.tedit.engine.graphics.Sprite;
 import com.tedit.engine.graphics.Vector;
 
@@ -27,7 +31,27 @@ public class Entity
     
     public Entity()
     {
+        eventActions = new SparseArray<ArrayList<Action>>();
         currentActions = new ArrayList<Action>();
+    }
+    public Entity(int id, Sprite entitySprite)
+    {
+        eventActions = new SparseArray<ArrayList<Action>>();
+        currentActions = new ArrayList<Action>();
+        transformation = new EntityTransformation(parent, new Vector(100,100), Vector.One(), 0);
+        
+        this.id=1203;
+        this.entitySprite = entitySprite;
+        
+        //FIXME: remove Testing
+        //FIXME: Hardcoded event id
+        //TODO: create method for adding actions
+        Displace testAction = new Displace(this,new Vector(1,1));
+        ArrayList<Action> temp = new ArrayList<Action>();
+        temp.add(testAction);
+        eventActions.put(14096, temp);
+        
+        
     }
     
     public void dispatchEvent(int id)
@@ -80,8 +104,10 @@ public class Entity
             act.update(deltaTime);
         }
     }
-    public void draw()
+    public void draw(Renderer renderer)
     {
+        //Log.d("Drawing", "drawing sprite, at pos"+transformation.getPostion().xValue+"/"+transformation.getPostion().yValue);
+        renderer.RenderSprite(entitySprite, transformation.getPostion());
         for(Action act: currentActions)
         {
             act.draw();

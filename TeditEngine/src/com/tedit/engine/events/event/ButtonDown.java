@@ -2,6 +2,8 @@ package com.tedit.engine.events.event;
 
 import tv.ouya.console.api.OuyaController;
 
+import android.util.Log;
+
 import com.tedit.engine.events.Event;
 import com.tedit.engine.events.ButtonId;
 import com.tedit.engine.events.EventIdUtil;
@@ -19,6 +21,7 @@ public class ButtonDown implements Event
         this.playerNum=playerNum;
         this.buttonId = buttonId;
         this.controller=OuyaController.getControllerByPlayer(playerNum);
+        Log.d("ButtonPress", "Id of buttonpress"+EventIdUtil.generateId(EventType.eventButtonDown.value, buttonId));
     }
     
     @Override

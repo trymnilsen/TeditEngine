@@ -26,6 +26,10 @@ public class EntityTransformation
     {
         this.localPosition.add(translation);
     }
+    public Vector getPostion()
+    {
+        return localPosition;
+    }
     //recursive function getting the absolute position based on the parent(s) relative positions to each other
     public Vector getAbsPostion()
     {

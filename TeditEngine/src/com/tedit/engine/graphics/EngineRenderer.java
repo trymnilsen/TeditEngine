@@ -26,7 +26,11 @@ public class EngineRenderer implements Renderer
         // TODO Auto-generated method stub
         canvas.drawRGB(color.r, color.g, color.b);
     }
-
+    @Override
+    public void RenderSprite(Sprite sprite, Vector position)
+    {
+        RenderSprite(sprite, (int)position.xValue, (int)position.yValue);
+    }
     @Override
     public void RenderSprite(Sprite sprite, int x, int y)
     {

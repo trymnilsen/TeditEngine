@@ -17,9 +17,9 @@ public class TestScreen extends Screen
     {
         super(game);
         clearColor = new CustomColor(72, 109, 159, 1);
-        Log.d("IO",path);
-        Bitmap bm = BitmapFactory.decodeFile(path+"/skate1.png");
-        testSprite = new Sprite(bm,1);
+        Log.d("Enitityes","creating test entity");
+        game.getEntityManager().createTestEntity();
+        
     }
 
     @Override
@@ -34,8 +34,7 @@ public class TestScreen extends Screen
     {
         x+=1*deltaTime;
                //Log.d("Graphics","Drawing"+testSprite.resourceId);
-            gameInstance.getRenderer().ClearBuffer(clearColor);
-            gameInstance.getRenderer().RenderSprite(testSprite, (int)x, 500);
+
 //        // TODO Auto-generated method stub
         
     }

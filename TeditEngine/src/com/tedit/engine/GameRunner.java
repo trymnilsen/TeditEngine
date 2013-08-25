@@ -12,15 +12,22 @@ import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
+import com.tedit.engine.entity.EntityManager;
+import com.tedit.engine.events.EventHandler;
 import com.tedit.engine.graphics.EngineRenderer;
-import com.tedit.engine.graphics.RenderView;
 import com.tedit.engine.graphics.Renderer;
 
 public class GameRunner extends Activity implements Game
 {
-    private RenderView renderView;
+    private GameView renderView;
     private Renderer graphics;
     private Screen screen;
+    private EventHandler eventsHandler;
+    private EntityManager entitiesManager;
+    
+    //TODO: encapsulate
+    public String externalPath;
+    
     public ArrayList<Integer> fpsList = new ArrayList<Integer>();
     public void onCreate(Bundle savedInstanceState)
     {
@@ -32,10 +39,12 @@ public class GameRunner extends Activity implements Game
         
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferW, frameBufferH, Config.RGB_565);
         
-        RenderView renderView = new RenderView(this, frameBuffer);
+        GameView renderView = new GameView(this, frameBuffer);
         graphics = new EngineRenderer(frameBuffer);
+        externalPath = this.getExternalFilesDir(null).toString();
+        eventsHandler = new EventHandler();
+        entitiesManager = new EntityManager(this);
         screen = new TestScreen(this,this.getExternalFilesDir(null).toString());
-        
         setContentView(renderView);
         
     }
@@ -102,5 +111,15 @@ public class GameRunner extends Activity implements Game
     {
         // TODO Auto-generated method stub
         return null;
+    }
+    @Override
+    public EventHandler getEventHandler()
+    {
+        return eventsHandler;
+    }
+    @Override
+    public EntityManager getEntityManager()
+    {
+        return entitiesManager;
     }
 }

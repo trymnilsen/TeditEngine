@@ -20,16 +20,24 @@ public class EventHandler
     
     public EventHandler()
     {
-       
+       //FIXME: hardcode style add the buttonpress
+       ButtonDown testEvent = new ButtonDown(0, OuyaController.BUTTON_O);
+       events.put(14096, testEvent);
     }
     
     public void subscribe(int eventId, Entity entity)
     {
-        //If our subscription list already contains this event add it to
-        //If not create it
-        if(subscriptions.indexOfKey(eventId)>=0)
+        /*
+        If our subscription list already contains this event add it to
+        If not create it
+        */
+        if(subscriptions.indexOfKey(eventId)<0)
         {
             subscriptions.put(eventId, new ArrayList<Entity>());
+        }
+        else
+        {
+            Log.d("JEGBAREDEBUGGWERJEG", "HEIHEIHEI"+subscriptions.indexOfKey(eventId));
         }
 
         subscriptions.get(eventId).add(entity);

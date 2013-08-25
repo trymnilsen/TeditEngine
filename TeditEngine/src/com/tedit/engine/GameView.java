@@ -1,6 +1,5 @@
-package com.tedit.engine.graphics;
+package com.tedit.engine;
 
-import com.tedit.engine.GameRunner;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,7 +8,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class RenderView extends SurfaceView implements Runnable {
+public class GameView extends SurfaceView implements Runnable {
     
     GameRunner game;
     Bitmap framebuffer;
@@ -19,7 +18,7 @@ public class RenderView extends SurfaceView implements Runnable {
     float second = 0;
     int frames = 0;
     
-    public RenderView(GameRunner game, Bitmap framebuffer) {
+    public GameView(GameRunner game, Bitmap framebuffer) {
         super(game);
         this.game = game;
         this.framebuffer = framebuffer;
@@ -36,6 +35,7 @@ public class RenderView extends SurfaceView implements Runnable {
     }      
     
     public void run() {
+        //TODO: implement proper deltaTime and loop
         Rect dstRect = new Rect();
         long startTime = System.nanoTime();
         while(running) {  
@@ -58,9 +58,12 @@ public class RenderView extends SurfaceView implements Runnable {
                frames=0;
            }
 
-            game.getScreen().update(deltaTime);
-            game.getScreen().drawFrame(deltaTime);
-          
+            //game.getScreen().update(deltaTime);
+            //game.getScreen().drawFrame(deltaTime);
+            game.getRenderer().ClearBuffer(new CustomColor(72, 109, 159, 1));
+            game.getEventHandler().update();
+            game.getEntityManager().updateWorld(deltaTime);
+            game.getEntityManager().renderWorld();
             
             
             Canvas canvas = holder.lockCanvas();
