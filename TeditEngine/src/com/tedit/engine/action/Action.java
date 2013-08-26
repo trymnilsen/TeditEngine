@@ -18,4 +18,5 @@ public abstract class Action
     public abstract void update(float deltaTime);
     public abstract void start();
     public abstract void draw();
+    public abstract void applyParams(Object[] params);
 }

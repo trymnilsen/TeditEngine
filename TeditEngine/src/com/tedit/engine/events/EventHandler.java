@@ -31,16 +31,20 @@ public class EventHandler
         If our subscription list already contains this event add it to
         If not create it
         */
-        if(subscriptions.indexOfKey(eventId)<0)
+        if(events.get(eventId)!=null)
         {
-            subscriptions.put(eventId, new ArrayList<Entity>());
+            if(subscriptions.indexOfKey(eventId)<0)
+            {
+                subscriptions.put(eventId, new ArrayList<Entity>());
+            }
+
+            subscriptions.get(eventId).add(entity);
         }
         else
         {
-            Log.d("JEGBAREDEBUGGWERJEG", "HEIHEIHEI"+subscriptions.indexOfKey(eventId));
+            Log.w("Event", "tried to subscribe to "+eventId+" not found");
         }
 
-        subscriptions.get(eventId).add(entity);
     }
     
     public void update()
