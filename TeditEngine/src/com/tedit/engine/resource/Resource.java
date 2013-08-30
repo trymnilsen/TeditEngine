@@ -1,6 +1,6 @@
 package com.tedit.engine.resource;
 
-public class Resource
+public interface Resource
 {
     
 }

@@ -28,9 +28,9 @@ public class IOReader
      * @param path Path the resource gets loaded from
      * @param callBack the object implementing resouceloader to callback
      */
-    public static void FetchResource(String path, IoLoadable callBack)
+    public static void FetchResource(String path, IoLoadable callBack,int fetchId)
     {
-        IOReadThread readT = new IOReadThread(path, callBack);
+        IOReadThread readT = new IOReadThread(path, callBack, fetchId);
         try
         {
             readT.start();

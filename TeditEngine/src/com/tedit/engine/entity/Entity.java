@@ -18,7 +18,8 @@ import com.tedit.engine.graphics.Vector;
 public class Entity
 {
     private int id;
-    private Sprite entitySprite;
+    //id to the resource of the current sprite
+    private int entitySprite;
     private boolean visible;
     private boolean staticEntity;
     private int depth;
@@ -34,7 +35,7 @@ public class Entity
         eventActions = new SparseArray<ArrayList<Action>>();
         currentActions = new ArrayList<Action>();
     }
-    public Entity(int id, Sprite entitySprite)
+    public Entity(int id, int entitySprite)
     {
         eventActions = new SparseArray<ArrayList<Action>>();
         currentActions = new ArrayList<Action>();

@@ -64,4 +64,10 @@ public class Displace extends Action
         
     }
 
+	@Override
+	public void applyParams(Object[] params) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
