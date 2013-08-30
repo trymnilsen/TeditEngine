@@ -108,6 +108,10 @@ public class Entity
     public void draw(Renderer renderer)
     {
         //Log.d("Drawing", "drawing sprite, at pos"+transformation.getPostion().xValue+"/"+transformation.getPostion().yValue);
+    	/**
+    	 * Draw The sprite
+    	 * if resource id == 0 we dont draw it, because there are no sprite associated with this entity
+    	 */
         renderer.RenderSprite(entitySprite, transformation.getPostion());
         for(Action act: currentActions)
         {

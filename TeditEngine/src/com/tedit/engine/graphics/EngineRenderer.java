@@ -1,6 +1,7 @@
 package com.tedit.engine.graphics;
 
 import com.tedit.engine.CustomColor;
+import com.tedit.engine.resource.ResourceManager;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -27,21 +28,24 @@ public class EngineRenderer implements Renderer
         canvas.drawRGB(color.r, color.g, color.b);
     }
     @Override
-    public void RenderSprite(Sprite sprite, Vector position)
+    public void RenderSprite(int spriteResourceId, Vector position)
     {
-        RenderSprite(sprite, (int)position.xValue, (int)position.yValue);
+        RenderSprite(spriteResourceId, (int)position.xValue, (int)position.yValue);
     }
     @Override
-    public void RenderSprite(Sprite sprite, int x, int y)
+    public void RenderSprite(int spriteResourceId, int x, int y)
     {
+    	//retrive the bitmap associated with this id
+    	Sprite drawSprite = ResourceManager.getInstance().<Sprite>getAsset(spriteResourceId);
+    	Bitmap drawMap = drawSprite.getBitmap();
         srcRect.left = x;
         srcRect.top = y;
-        srcRect.right = x+sprite.getBitmap().getWidth();
-        srcRect.bottom = y+sprite.getBitmap().getHeight();
+        srcRect.right = x+drawMap.getWidth();
+        srcRect.bottom = y+drawMap.getHeight();
         
         dstRect = srcRect;
 
-        canvas.drawBitmap(sprite.getBitmap(), null, dstRect, null);
+        canvas.drawBitmap(drawMap, null, dstRect, null);
         
     }
     
