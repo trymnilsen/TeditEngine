@@ -49,21 +49,15 @@ public class GameView extends SurfaceView implements Runnable {
             if (deltaTime > 3.15){
                 deltaTime = (float) 3.15;
            }
-           second += deltaTime;
-           frames += 1;
-           if(second>=100)
-           {
-               game.fpsList.add(frames);
-               second=0;
-               frames=0;
-           }
+
 
             //game.getScreen().update(deltaTime);
             //game.getScreen().drawFrame(deltaTime);
             game.getRenderer().ClearBuffer(new CustomColor(72, 109, 159, 1));
             game.getEventHandler().update();
-            game.getEntityManager().updateWorld(deltaTime);
-            game.getEntityManager().renderWorld();
+            //TODO: Optimize screen identification (Hash of string or pure int id from tool)
+            game.getEntityManager().updateWorld(deltaTime,game.getScreen().ScreenName);
+            game.getEntityManager().renderWorld(game.getScreen().ScreenName);
             
             
             Canvas canvas = holder.lockCanvas();

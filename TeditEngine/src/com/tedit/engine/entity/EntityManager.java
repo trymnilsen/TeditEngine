@@ -1,6 +1,7 @@
 package com.tedit.engine.entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,7 +17,8 @@ import com.tedit.engine.resource.ResourceManager;
 //And handling of an entity' lifetime
 public class EntityManager
 {
-    private ArrayList<Entity> entities = new ArrayList<Entity>();
+    private HashMap<String, ArrayList<Entity>> entities = new HashMap<String, ArrayList<Entity>>();
+    //as of now entities are only supported on a screenbasis, all entities are set/reset for each screen
     private GameRunner game;
     public EntityManager(GameRunner game)
     {
@@ -32,18 +34,28 @@ public class EntityManager
         Sprite testSprite = new Sprite(bm,1);
         Entity testEntity = new Entity(138,ResourceManager.getInstance().LoadSprite(path+"/skate1.png"));
         game.getEventHandler().subscribe(14096, testEntity);
-        entities.add(testEntity);
+        addEntity("testScreen", testEntity);
     }
-    public void updateWorld(float deltaTime)
+    public void addEntity(String name, Entity entity)
     {
-        for(Entity e : entities)
+        //if scene does not exist as key in entities list, create it
+        if(entities.get(name)==null)
+        {
+            entities.put(name, new ArrayList<Entity>());
+        }
+        //Add the entity
+        entities.get(name).add(entity);
+    }
+    public void updateWorld(float deltaTime, String ActiveScreen)
+    {
+        for(Entity e : entities.get(ActiveScreen))
         {
             e.update(deltaTime);
         }
     }
-    public void renderWorld()
+    public void renderWorld(String ActiveScreen)
     {
-        for(Entity e : entities)
+        for(Entity e : entities.get(ActiveScreen))
         {
             e.draw(game.getRenderer());
         }

@@ -28,7 +28,7 @@ public class GameRunner extends Activity implements Game
     //TODO: encapsulate
     public String externalPath;
     
-    public ArrayList<Integer> fpsList = new ArrayList<Integer>();
+    //public ArrayList<Integer> fpsList = new ArrayList<Integer>();
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -78,10 +78,7 @@ public class GameRunner extends Activity implements Game
     @Override
     protected void onDestroy()
     {
-        for(Integer f:fpsList)
-        {
-            Log.d("FPS","Fps:"+ f);
-        }
+
         super.onDestroy();
     }
     @Override

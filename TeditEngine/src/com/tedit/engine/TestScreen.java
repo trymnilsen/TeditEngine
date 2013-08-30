@@ -15,7 +15,7 @@ public class TestScreen extends Screen
     float x = 0;
     public TestScreen(Game game, String path)
     {
-        super(game);
+        super(game,"testScreen");
         clearColor = new CustomColor(72, 109, 159, 1);
         Log.d("Enitityes","creating test entity");
         game.getEntityManager().createTestEntity();
