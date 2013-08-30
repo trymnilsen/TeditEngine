@@ -11,16 +11,25 @@ import android.util.SparseArray;
 
 public class ResourceManager implements IoLoadable
 {
+	private static final ResourceManager INSTANCE = new ResourceManager();
 	//Contains the mapping of Resource GUID for all resourceObjects
 	private SparseArray<Resource> resources = new SparseArray<Resource>();
 	//contains mapping of loadrequests that has been started but not recived
 	private SparseArray<ResourceType> pendingFetches = new SparseArray<ResourceType>();
 	//Resource id is implemented as simple as increasing the variable by 1 for each load method call
-	private int currentResourceId = 0;
+	//private int currentResourceId = 0;
 	
-	public ResourceManager()
+	private ResourceManager() //avoid creating of another
 	{
 		
+	}
+	/**
+	 * Singleton pattern implementation
+	 * @return The resourcemanager instance
+	 */
+	public static ResourceManager getInstance()
+	{
+		return INSTANCE;
 	}
 	/**
 	 * Loads a sprite from path
