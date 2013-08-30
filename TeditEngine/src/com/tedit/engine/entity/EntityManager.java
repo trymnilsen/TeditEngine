@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.tedit.engine.GameRunner;
 import com.tedit.engine.graphics.Sprite;
+import com.tedit.engine.resource.ResourceManager;
 
 //Should be developed to handler multiple scenes
 //persistance in entities
@@ -29,7 +30,7 @@ public class EntityManager
         Bitmap bm = BitmapFactory.decodeFile(path+"/skate1.png");
         
         Sprite testSprite = new Sprite(bm,1);
-        Entity testEntity = new Entity(138,testSprite);
+        Entity testEntity = new Entity(138,ResourceManager.getInstance().LoadSprite(path+"/skate1.png"));
         game.getEventHandler().subscribe(14096, testEntity);
         entities.add(testEntity);
     }
