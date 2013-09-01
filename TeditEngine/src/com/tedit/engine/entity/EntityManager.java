@@ -48,16 +48,22 @@ public class EntityManager
     }
     public void updateWorld(float deltaTime, String ActiveScreen)
     {
-        for(Entity e : entities.get(ActiveScreen))
+        if(entities.get(ActiveScreen)!=null)
         {
-            e.update(deltaTime);
+            for(Entity e : entities.get(ActiveScreen))
+            {
+                e.update(deltaTime);
+            }
         }
     }
     public void renderWorld(String ActiveScreen)
     {
-        for(Entity e : entities.get(ActiveScreen))
+        if(entities.get(ActiveScreen)!=null)
         {
-            e.draw(game.getRenderer());
+            for(Entity e : entities.get(ActiveScreen))
+            {
+                e.draw(game.getRenderer());
+            }
         }
     }
 }

@@ -51,9 +51,10 @@ public class GameView extends SurfaceView implements Runnable {
            }
 
 
-            //game.getScreen().update(deltaTime);
-            //game.getScreen().drawFrame(deltaTime);
-            game.getRenderer().ClearBuffer(new CustomColor(72, 109, 159, 1));
+
+            game.getRenderer().ClearBuffer(new CustomColor(50, 50, 50, 1));
+            game.getScreen().update(deltaTime);
+            game.getScreen().drawFrame(deltaTime);
             game.getEventHandler().update();
             //TODO: Optimize screen identification (Hash of string or pure int id from tool)
             game.getEntityManager().updateWorld(deltaTime,game.getScreen().ScreenName);

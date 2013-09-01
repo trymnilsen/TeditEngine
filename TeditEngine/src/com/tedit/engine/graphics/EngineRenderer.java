@@ -48,5 +48,18 @@ public class EngineRenderer implements Renderer
         canvas.drawBitmap(drawMap, null, dstRect, null);
         
     }
+
+    @Override
+    public void RenderBitmap(Bitmap bitmap, int x, int y)
+    {
+        srcRect.left = x;
+        srcRect.top = y;
+        srcRect.right = x+bitmap.getWidth();
+        srcRect.bottom = y+bitmap.getHeight();
+        dstRect = srcRect;
+        //Log.d("Graphics", "X,Y,X2,Y2, "+srcRect.left+","+srcRect.top+","+srcRect.right+","+srcRect.bottom);
+        canvas.drawBitmap(bitmap,null,dstRect,null);
+        
+    }
     
 }

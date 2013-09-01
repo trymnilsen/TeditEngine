@@ -45,18 +45,18 @@ public class GameRunner extends Activity implements Game
         eventsHandler = new EventHandler();
         entitiesManager = new EntityManager(this);
         screen = new TestScreen(this,this.getExternalFilesDir(null).toString());
+        screen = new LoadingScreen(this);
         setContentView(renderView);
         
     }
-
     /**
      * Input Handling
      * As we want to have to available no matter the view/state of our app we forward the presses to the ouyaController Class
      */
     //Redirects the keydown event
     @Override
-    public boolean onKeyDown(final int keyCode, KeyEvent event){
-
+    public boolean onKeyDown(final int keyCode, KeyEvent event)
+    {
         boolean handled = OuyaController.onKeyDown(keyCode, event);
         return handled || super.onKeyDown(keyCode, event);
     }
