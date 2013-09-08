@@ -6,6 +6,6 @@ public class AssetsParser
 {
     public AssetsParser(JsonObject assetsObject)
     {
-    
+        
     }
 }

@@ -16,6 +16,7 @@ import com.tedit.engine.entity.EntityManager;
 import com.tedit.engine.events.EventHandler;
 import com.tedit.engine.graphics.EngineRenderer;
 import com.tedit.engine.graphics.Renderer;
+import com.tedit.engine.parser.GameParser;
 
 public class GameRunner extends Activity implements Game
 {
@@ -36,7 +37,8 @@ public class GameRunner extends Activity implements Game
         
         int frameBufferW = 1920;
         int frameBufferH = 1080;
-        
+        GameParser gameParser = new GameParser(this.getExternalFilesDir(null).toString()+"/game.json");
+        gameParser.Parse();
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferW, frameBufferH, Config.RGB_565);
         
         GameView renderView = new GameView(this, frameBuffer);
