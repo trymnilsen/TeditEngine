@@ -1,5 +1,7 @@
 package com.tedit.engine.resource;
 
+import java.util.HashMap;
+
 import com.tedit.engine.graphics.Sprite;
 import com.tedit.engine.io.IOReader;
 import com.tedit.engine.io.IoLoadable;
@@ -16,8 +18,11 @@ public class ResourceManager implements IoLoadable
 	private SparseArray<Resource> resources = new SparseArray<Resource>();
 	//contains mapping of loadrequests that has been started but not recived
 	private SparseArray<ResourceType> pendingFetches = new SparseArray<ResourceType>();
+	//Conatins mapping of resourcepath to resourceGUID
+	private HashMap<String, Integer> resourcesLoaded = new HashMap<String, Integer>();
 	//Resource id is implemented as simple as increasing the variable by 1 for each load method call
-	//private int currentResourceId = 0;
+	//Then mapped by path name enabling easy lookup if assets is loaded. Completely eliminates the chance of collisions
+	private int currentUnusedResourceId = 0;
 	
 	private ResourceManager() //avoid creating of another
 	{
@@ -32,6 +37,15 @@ public class ResourceManager implements IoLoadable
 		return INSTANCE;
 	}
 	/**
+	 * Checks if a sprite with the given id is loaded
+	 * @param spritePath the path of the sprite
+	 * @return true if loaded false if not
+	 */
+	public boolean isSpriteLoaded(String spritePath)
+	{
+	    return resourcesLoaded.containsKey(spritePath);
+	}
+	/**
 	 * Loads a sprite from path
 	 * returns the id of the newly created resource, however the resource itself is loaded async and will not be availabe at once.
 	 * Classes using resources should handle this
@@ -40,14 +54,24 @@ public class ResourceManager implements IoLoadable
 	 */
 	public int LoadSprite(String pathToSprite)
 	{
-		int hashCode = pathToSprite.hashCode();
-		if(resources.get(hashCode)==null)
+		int resourceId = -1;
+		if(resourcesLoaded.containsKey(pathToSprite))
+		{
+		    resourceId=resourcesLoaded.get(pathToSprite);
+		}
+		else
+		{
+		    currentUnusedResourceId++;
+		    resourceId = currentUnusedResourceId;
+		}
+		if(resources.get(resourceId)==null)
 		{		
 			//put the resource id in pending fetches list
-			pendingFetches.put(hashCode, ResourceType.Sprite);
-			readFileAsync(pathToSprite, hashCode);
+			pendingFetches.put(resourceId, ResourceType.Sprite);
+			resourcesLoaded.put(pathToSprite,resourceId);
+			readFileAsync(pathToSprite, resourceId);
 		}
-		return hashCode;
+		return resourceId;
 		
 	}
 	@Override

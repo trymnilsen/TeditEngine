@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.tedit.engine.GameRunner;
 import com.tedit.engine.graphics.Sprite;
@@ -17,12 +18,24 @@ import com.tedit.engine.resource.ResourceManager;
 //And handling of an entity' lifetime
 public class EntityManager
 {
-    private HashMap<String, ArrayList<Entity>> entities = new HashMap<String, ArrayList<Entity>>();
+    //Active entities in each screen
+    private HashMap<String, ArrayList<Entity>> entities;
+    //Contains the objects created for the game, each entity is mapped to this and gets a clone of it if its present in a scene
+    private SparseArray<Entity> entityTemplates;
     //as of now entities are only supported on a screenbasis, all entities are set/reset for each screen
     private GameRunner game;
     public EntityManager(GameRunner game)
     {
         this.game=game;
+        entities = new HashMap<String, ArrayList<Entity>>();
+        entityTemplates = new SparseArray<Entity>();
+    }
+    public void createTemplateEntity(int entityId, String spritePath)
+    {
+        int resourceId = -1;
+        //Loads the sprite
+        //Method returns resourceId at once, and starts a load thread if sprite is not loaded.
+        resourceId = ResourceManager.getInstance().LoadSprite(spritePath);
     }
     public void createTestEntity()
     {
